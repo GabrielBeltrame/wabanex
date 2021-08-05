@@ -15,5 +15,10 @@ defmodule Wabanex.User do
   def changeset(params) do
     %__MODULE__{} #mesma coisa do que escrever %Wabanex.User{}
     |> cast(params, @fields) # estou fazendo o casting mapeando para os campos do fields
+    |> validate_required(@fields)
+    |> validate_length(:password, min: 6)
+    |> validate_length(:name, min: 2)
+    |> validate_format(:email, ~r/@/)
+    |> unique_constraint([:email])
   end
 end
